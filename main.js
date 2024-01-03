@@ -1,38 +1,61 @@
-let confirmationMessage = document.querySelector(".confirmationMessage");
-let firstNameInput = document.querySelector("#firstName");
-let lastNameInput = document.querySelector("#lastName");
-let genderInputs = document.querySelector("#gender");
-let textMessageInput = document.querySelector("#textMessage");
-let formSubmit = document.querySelector("#myForm");
+//ex 1
+//concatanate the following two variables and store it in a fullStack variable
+const frontEnd = ["HTML", "CSS", "JS", "React", "Redux"];
+const backEnd = ["Node", "Express", "Mongo DB"];
+const fullStack = frontEnd + "," + backEnd;
 
-formSubmit.addEventListener("submit", function (event) {
-  event.preventDefault();
-  // Prevents the default form submission
+console.log(fullStack);
 
-  var firstNameValue = firstNameInput.value.trim();
-  var lastNameValue = lastNameInput.value.trim();
-  var textMessageValue = textMessageInput.value.trim();
+//ex 2
+const shoppingCart = ["Milk", "Coffee", "Tea", "Honey"];
+//add 'Meat' in the begining of your shopping cart if it has not been already added
+shoppingCart.unshift("Meat");
+//add 'Sugar' at the end of your shopping cart
+shoppingCart.push("Sugar");
+//remove 'Honey' if you're allergic to honey
+shoppingCart.splice(4, 1);
+//modify Tea to 'Green Tea'
+shoppingCart[3] = "Green Tea";
 
-  if (firstNameValue === "") {
-    firstNameInput.classList.add("error"); // Add the error class
-  } else if (lastNameValue === "") {
-    lastNameInput.classList.add("error");
-  } else if (textMessageValue === "") {
-    textMessageInput.classList.add("error");
-  } else {
-    firstNameInput.classList.remove("error"); // Remove the error class if present
-    lastNameInput.classList.remove("error");
-    textMessageInput.classList.remove("error");
-  }
+console.log(shoppingCart);
 
-  confirmationMessage.style.display = "block";
-  //setting the display from none to block
-  let userName = firstNameInput.value;
-  //getting the value of the user from the First Name input box
-  confirmationMessage.innerHTML = "Thanks for your message, " + userName + "!";
+//ex 3
+//Check if the season is Autumn, Winter, Spring or Summer. If the user input is:
+var input = "MAY";
+var season = undefined;
+input = input.toLocaleLowerCase();
 
-  formSubmit.reset();
-  //reset the form
-});
+if (input === "january" || input === "february" || input === "december") {
+  season = "Winter";
+} else if (input === "march" || input === "april" || input === "may") {
+  season = "Spring";
+} else if (input === "june" || input === "july" || input === "august") {
+  season = "Summer";
+} else if (
+  input === "september" ||
+  input === "october" ||
+  input === "november"
+) {
+  season = "Autumn";
+} else {
+  season = "Wrong input";
+}
 
-console.log(userName);
+console.log(season);
+
+//ex 4
+//Given an object how many more pages each ink color can print, output the maximum number of pages the printer can print before aby if the colors run out
+//A single printed page requires each color once, so printing is not possible if any of the slots lack ink
+var inkLevels = {
+  cyan: 66,
+  magenta: 55,
+  yellow: 44,
+};
+
+var numberOfPages = Math.min(
+  inkLevels.cyan,
+  inkLevels.magenta,
+  inkLevels.yellow
+);
+
+console.log(numberOfPages);
