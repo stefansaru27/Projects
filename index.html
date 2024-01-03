@@ -1,79 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <link rel="stylesheet" href="styles.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <form class="my-form">
-      <header class="header">About</header>
-      <section class="section1">
-        <div>
-          <label class="blockLabel">Recipe Title</label>
+    <div class="confirmationMessage"></div>
+
+    <div class="container">
+      <form id="myForm">
+        <div class="inputGroup">
           <input
             type="text"
-            name="recipeTitle"
-            placeholder="Title"
-            class="wide"
+            class="input-box"
+            id="firstName"
+            placeholder="First Name"
           />
         </div>
-        <div>
-          <label class="blockLabel">Description</label>
+        <div class="inputGroup">
+          <input
+            type="text"
+            class="input-box"
+            id="lastName"
+            placeholder="Last Name"
+          />
+        </div>
+        <div class="radioButton">
+          <label for="radio">Gender</label>
+          <div class="radio">
+            <input type="radio" name="gender" id="gender" />
+            <label for="">M</label>
+          </div>
+          <div class="radio">
+            <input type="radio" name="gender" id="gender" />
+            <label for="">F</label>
+          </div>
+        </div>
+
+        <div class="inputGroup">
           <textarea
-            name="text"
-            placeholder="About the recipe"
-            class="wide"
+            id="textMessage"
+            rows="10"
+            placeholder="Your message here..."
           ></textarea>
         </div>
 
-        <div class="form-group">
-          <div class="form-group2">
-            <label>Portions</label>
-            <input type="number" value="1" class="small" />
-          </div>
-          <div class="form-group2">
-            <label>Time(mins)</label>
-            <input type="number" value="5" class="small" />
-          </div>
-          <div class="form-group2">
-            <label>Dificulty</label>
-            <input type="number" value="1" class="small" />
-          </div>
-        </div>
-      </section>
-
-      <header class="header">Ingredients</header>
-      <section class="section2">
-        <div class="form-group">
-          <input type="text" placeholder="Qty." class="smallText" />
-          <select name="measure">
-            <option value="unit">Unit</option>
-            <option value="grams">G</option>
-            <option value="kg">Kg</option>
-          </select>
-          <label>of</label>
-          <input type="text" placeholder="Ingredient" />
-          <input type="submit" class="plus" value="+" />
-        </div>
-      </section>
-
-      <header class="header">Steps</header>
-      <section class="section3">
-        <label class="blockLabel">Step</label>
-        <textarea
-          name="step"
-          placeholder="Step Description"
-          class="wide"
-        ></textarea>
-        <input type="submit" name="addStep" class="addStep" value="Add Step" "
+        <button type="submit" class="submit">Submit</button>
+      </form>
+      <div>
+        <img
+          class="image"
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZA1UdiZ7NanNbG8Ull2ihB949MNovTfLxgw&usqp=CAU"
+          alt=""
         />
-      </section>
-    </form>
-
-    <button class="cancel">Cancel</button>
-    <button class="save">Save</button>
+      </div>
+    </div>
+    <script src="main.js" defer></script>
   </body>
 </html>

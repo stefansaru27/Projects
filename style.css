@@ -1,0 +1,54 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.confirmationMessage {
+  display: none;
+  width: 50%;
+  margin: 20px auto;
+  background-color: rgb(115, 190, 115);
+  padding: 10px;
+  color: green;
+}
+
+.container {
+  display: flex;
+
+  border: 1px solid grey;
+  width: 50%;
+  margin: auto;
+  margin-top: 20px;
+}
+
+.submit {
+  background-color: cadetblue;
+  color: white;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+#myForm,
+.image {
+  margin: 25px;
+}
+
+.radio {
+  margin-left: 20px;
+}
+
+.input-box,
+textarea {
+  width: 300px;
+  max-width: 100%;
+  margin-bottom: 25px;
+}
+
+.input-box {
+  height: 20px;
+}
+
+.error {
+  border: 1px solid red;
+}

@@ -1,25 +1,38 @@
-var choice = ["rock", "paper", "scissors"];
+let confirmationMessage = document.querySelector(".confirmationMessage");
+let firstNameInput = document.querySelector("#firstName");
+let lastNameInput = document.querySelector("#lastName");
+let genderInputs = document.querySelector("#gender");
+let textMessageInput = document.querySelector("#textMessage");
+let formSubmit = document.querySelector("#myForm");
 
-var userChoice = choice[Math.floor(Math.random() * choice.length)];
-var computerChoice = choice[Math.floor(Math.random() * choice.length)];
+formSubmit.addEventListener("submit", function (event) {
+  event.preventDefault();
+  // Prevents the default form submission
 
-function play() {
-  console.log("Computer choice: " + computerChoice);
-  console.log("Player choice: " + userChoice);
-}
+  var firstNameValue = firstNameInput.value.trim();
+  var lastNameValue = lastNameInput.value.trim();
+  var textMessageValue = textMessageInput.value.trim();
 
-play();
+  if (firstNameValue === "") {
+    firstNameInput.classList.add("error"); // Add the error class
+  } else if (lastNameValue === "") {
+    lastNameInput.classList.add("error");
+  } else if (textMessageValue === "") {
+    textMessageInput.classList.add("error");
+  } else {
+    firstNameInput.classList.remove("error"); // Remove the error class if present
+    lastNameInput.classList.remove("error");
+    textMessageInput.classList.remove("error");
+  }
 
-console.log();
+  confirmationMessage.style.display = "block";
+  //setting the display from none to block
+  let userName = firstNameInput.value;
+  //getting the value of the user from the First Name input box
+  confirmationMessage.innerHTML = "Thanks for your message, " + userName + "!";
 
-if (userChoice === computerChoice) {
-  console.log("Draw");
-} else if (
-  (userChoice === "rock" && computerChoice === "scissors") ||
-  (userChoice === "paper" && computerChoice === "rock") ||
-  (userChoice === "scissors" && computerChoice === "paper")
-) {
-  console.log("User wins!");
-} else {
-  console.log("Computer wins!");
-}
+  formSubmit.reset();
+  //reset the form
+});
+
+console.log(userName);
