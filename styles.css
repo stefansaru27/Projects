@@ -1,0 +1,87 @@
+body {
+  background-color: #f9f9f9;
+  width: 50%;
+  margin: auto;
+}
+
+textarea {
+  height: 100px;
+  border: 0;
+}
+input {
+  border: 0;
+  margin-bottom: 10px;
+}
+
+.my-form {
+  background-color: #f6f4f4;
+  box-sizing: border-box;
+}
+
+.blockLabel {
+  display: block;
+  margin-bottom: 5px;
+}
+.section1,
+.section2,
+.section3 {
+  padding: 20px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+header {
+  background-color: #d94e44;
+  color: white;
+  height: 25px;
+  padding-left: 10px;
+  margin-top: 15px;
+}
+
+.cancel,
+.save {
+  width: 49.7%;
+  height: 25px;
+}
+.save {
+  background-color: #db4d3f;
+  color: white;
+}
+.cancel {
+  background-color: white;
+  color: #db4d3f;
+  border: 1px solid #db4d3f;
+}
+
+.addStep {
+  width: 98%;
+  height: 25px;
+  background-color: white;
+  color: #db4d3f;
+  border: 1px solid #db4d3f;
+}
+
+.form-group {
+  margin: 10px;
+  display: flex;
+  justify-content: space-between;
+
+  box-sizing: border-box;
+}
+
+.wide {
+  width: 98%;
+}
+
+.form-group .small {
+  width: 25px;
+}
+
+.section2 .plus {
+  background-color: white;
+  border: 1px solid #db4d3f;
+  color: #db4d3f;
+}
+
+.section2 .smallText {
+  width: 30px;
+}
