@@ -1,38 +1,51 @@
-let confirmationMessage = document.querySelector(".confirmationMessage");
-let firstNameInput = document.querySelector("#firstName");
-let lastNameInput = document.querySelector("#lastName");
-let genderInputs = document.querySelector("#gender");
-let textMessageInput = document.querySelector("#textMessage");
-let formSubmit = document.querySelector("#myForm");
+//A generic function that uses fetch to GET a URL and return the responses
+function fetchData(url, id) {
+  fetch(`https://rickandmortyapi.com/api/${url}/${id}`, {
+    method: "GET",
+  })
+    .then((response) => response.json())
+    .then((jsonResponse) => console.log(jsonResponse));
+}
 
-formSubmit.addEventListener("submit", function (event) {
-  event.preventDefault();
-  // Prevents the default form submission
+//A function that can GET all locations or a single location
+function getLocation(id) {
+  url = "location";
+  fetchData(url, id);
+}
 
-  var firstNameValue = firstNameInput.value.trim();
-  var lastNameValue = lastNameInput.value.trim();
-  var textMessageValue = textMessageInput.value.trim();
+//A function that can GET all characters or a single character
+function getCharacter(id) {
+  url = "character";
+  this.id = id;
+  fetchData(url, id);
+}
 
-  if (firstNameValue === "") {
-    firstNameInput.classList.add("error"); // Add the error class
-  } else if (lastNameValue === "") {
-    lastNameInput.classList.add("error");
-  } else if (textMessageValue === "") {
-    textMessageInput.classList.add("error");
-  } else {
-    firstNameInput.classList.remove("error"); // Remove the error class if present
-    lastNameInput.classList.remove("error");
-    textMessageInput.classList.remove("error");
-  }
+//A function that can GET all episodes or a single episode
+function getEpisode(id) {
+  url = "episode";
+  fetchData(url, id);
+}
 
-  confirmationMessage.style.display = "block";
-  //setting the display from none to block
-  let userName = firstNameInput.value;
-  //getting the value of the user from the First Name input box
-  confirmationMessage.innerHTML = "Thanks for your message, " + userName + "!";
+//get all locations
+getLocation("");
 
-  formSubmit.reset();
-  //reset the form
-});
+//get location by id
+getLocation("1");
+getLocation("2");
+getLocation("3");
 
-console.log(userName);
+//get all characters
+getCharacter("");
+
+//get character by id
+getCharacter("1");
+getCharacter("2");
+getCharacter("3");
+
+//get all episodes
+getEpisode("");
+
+//get episode by id
+getEpisode("1");
+getEpisode("2");
+getEpisode("3");
