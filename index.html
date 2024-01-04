@@ -4,56 +4,24 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="confirmationMessage"></div>
+    <div id="pageTitle">RICK AND MORTY</div>
 
-    <div class="container">
-      <form id="myForm">
-        <div class="inputGroup">
-          <input
-            type="text"
-            class="input-box"
-            id="firstName"
-            placeholder="First Name"
-          />
-        </div>
-        <div class="inputGroup">
-          <input
-            type="text"
-            class="input-box"
-            id="lastName"
-            placeholder="Last Name"
-          />
-        </div>
-        <div class="radioButton">
-          <label for="radio">Gender</label>
-          <div class="radio">
-            <input type="radio" name="gender" id="gender" />
-            <label for="">M</label>
-          </div>
-          <div class="radio">
-            <input type="radio" name="gender" id="gender" />
-            <label for="">F</label>
-          </div>
-        </div>
-
-        <div class="inputGroup">
-          <textarea
-            id="textMessage"
-            rows="10"
-            placeholder="Your message here..."
-          ></textarea>
-        </div>
-
-        <button type="submit" class="submit">Submit</button>
-      </form>
+    <form id="myForm">
       <div>
-        <img
-          class="image"
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZA1UdiZ7NanNbG8Ull2ihB949MNovTfLxgw&usqp=CAU"
-          alt=""
-        />
+        <label for="id">ID number of</label>
+        <select name="" id="select">
+          <option value="location">Location</option>
+          <option value="character">Character</option>
+          <option value="episode">Episode</option>
+        </select>
+        <input id="id" type="text" placeholder="Enter the ID here..." />
+        <button type="submit" id="submit">Show</button>
+        <button type="submit" id="submitAll">Show All</button>
       </div>
-    </div>
-    <script src="main.js" defer></script>
+    </form>
+
+    <div id="output"></div>
+
+    <script src="main.js" async defer></script>
   </body>
 </html>
