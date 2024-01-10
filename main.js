@@ -1,145 +1,81 @@
-let id = document.getElementById("id");
-let submitBtn = document.getElementById("submit");
-let submitAllBtn = document.getElementById("submitAll");
-let formSubmit = document.getElementById("myForm");
-let select = document.getElementById("select");
-//A generic function that uses fetch to GET a URL and return the responses
-function fetchData(url, id = "") {
-  const apiUrl = id
-    ? `https://rickandmortyapi.com/api/${url}/${id}`
-    : `https://rickandmortyapi.com/api/${url}`;
+const searchBtn = document.getElementById("search-btn");
+const mealList = document.getElementById("meal");
+const mealDetailsContent = document.querySelector(".meal-details-content");
+const recipeCloseBtn = document.getElementById("recipe-close-btn");
 
-  return fetch(apiUrl, {
-    method: "GET",
-  }).then((response) => {
-    if (!response.ok) {
-      throw new Error("Network was not ok");
-    }
-    return response.json();
-  });
-}
+//event listeners
+searchBtn.addEventListener("click", getMealList);
+mealList.addEventListener("click", getMealRecipe);
+recipeCloseBtn.addEventListener("click", () => {
+  mealDetailsContent.parentElement.classList.remove("showRecipe");
+});
 
-// Function to update the DOM with data from "jsonResponse"
-function updateDOM(data) {
-  const outputContainer = document.getElementById("output");
-  outputContainer.innerHTML = "";
-  // Check if data is an array (Show All) or a single object
-  if (Array.isArray(data.results)) {
-    // Display all items in the array
-    data.results.forEach((item) => {
-      const listItem = document.createElement("li");
-
-      // Customize the output based on the type of data
-      if (item.type !== undefined) {
-        // For locations
-        listItem.textContent = `ID: ${item.id || "N/A"}, Name: ${
-          item.name || "N/A"
-        }, Type: ${item.type || "N/A"}, Dimension: ${item.dimension || "N/A"}`;
-      } else if (item.status !== undefined) {
-        // For characters
-        listItem.textContent = `ID: ${item.id || "N/A"}, Name: ${
-          item.name || "N/A"
-        }, Status: ${item.status || "N/A"}, Species: ${item.species || "N/A"}`;
-      } else if (item.episode !== undefined) {
-        // For episodes
-        listItem.textContent = `ID: ${item.id || "N/A"}, Name: ${
-          item.name || "N/A"
-        }, Episode: ${item.episode || "N/A"}, Air Date: ${
-          item.air_date || "N/A"
-        }`;
+//get meal list that matches with the ingredients
+function getMealList() {
+  let searchInputTxt = document.getElementById("search-input").value.trim();
+  console.log(searchInputTxt.length);
+  fetch(
+    `https://www.themealdb.com/api/json/v1/1/filter.php?i=${searchInputTxt}`
+  )
+    .then((response) => response.json())
+    .then((data) => {
+      let html = "";
+      if (data.meals) {
+        data.meals.forEach((meal) => {
+          html += `
+          <div class="meal-item" data-id = "${meal.idMeal}">
+            <div class="meal-img">
+              <img src=${meal.strMealThumb} alt="food" />
+            </div>
+            <div class="meal-name">
+              <h3>${meal.strMeal}</h3>
+              <a href="#" class="recipe-btn">Get Recipe</a>
+            </div>
+          </div>
+          `;
+        });
+      } else {
+        html = "Sorry, we didn't find any meal!";
+        mealList.classList.add("notFound");
       }
-
-      outputContainer.appendChild(listItem);
+      mealList.innerHTML = html;
     });
-  } else {
-    // Display a single object
-    const listItem = document.createElement("li");
+}
 
-    // Customize the output based on the type of data
-    if (data.type !== undefined) {
-      // For locations
-      listItem.textContent = `ID: ${data.id || "N/A"}, Name: ${
-        data.name || "N/A"
-      }, Type: ${data.type || "N/A"}, Dimension: ${data.dimension || "N/A"}`;
-    } else if (data.status !== undefined) {
-      // For characters
-      listItem.textContent = `ID: ${data.id || "N/A"}, Name: ${
-        data.name || "N/A"
-      }, Status: ${data.status || "N/A"}, Species: ${data.species || "N/A"}`;
-    } else if (data.episode !== undefined) {
-      // For episodes
-      listItem.textContent = `ID: ${data.id || "N/A"}, Name: ${
-        data.name || "N/A"
-      }, Episode: ${data.episode || "N/A"}, Air Date: ${
-        data.air_date || "N/A"
-      }`;
-    }
-
-    outputContainer.appendChild(listItem);
+//get the recipe of the meal
+function getMealRecipe(e) {
+  e.preventDefault();
+  if (e.target.classList.contains("recipe-btn")) {
+    let mealItem = e.target.parentElement.parentElement;
+    fetch(
+      `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${mealItem.dataset.id}`
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        mealRecipeModal(data.meals);
+      });
   }
 }
 
-//ID, Name, type, dimension
-//A function that can GET all locations or a single location
-function getLocation(id) {
-  const url = "location";
-  fetchData(url, id).then((jsonResponse) => {
-    updateDOM(jsonResponse);
-  });
+//create a modal
+function mealRecipeModal(meal) {
+  console.log(meal);
+  meal = meal[0];
+  let html = `              
+    <h2 class="recipe-title">${meal.strMeal}</h2>
+    <p class="recipe-category">${meal.strCategory}</p>
+    <div class="recipe-instruct">
+        <h3>Instructions:</h3>
+        <p>${meal.strInstructions}</p>
+    </div>
+    <div class="recipe-meal-img">
+        <img src="${meal.strMealThumb}" alt="" />
+    </div>
+    <div class="recipe-link">
+        <a href="${meal.strYoutube}" target="_blank">Watch Video</a>
+    </div>
+    `;
+
+  mealDetailsContent.innerHTML = html;
+  mealDetailsContent.parentElement.classList.add("showRecipe");
 }
-
-//ID, Name, Status, species
-//A function that can GET all characters or a single character
-function getCharacter(id) {
-  const url = "character";
-  fetchData(url, id).then((jsonResponse) => {
-    updateDOM(jsonResponse);
-  });
-}
-
-//id, name, episode, air_date
-//A function that can GET all episodes or a single episode
-function getEpisode(id) {
-  const url = "episode";
-  fetchData(url, id).then((jsonResponse) => {
-    updateDOM(jsonResponse);
-  });
-}
-
-submitBtn.addEventListener("click", function (event) {
-  event.preventDefault();
-  const inputId = id.value;
-
-  // Check if the inputId is empty before making the API call
-  if (inputId.trim() !== "") {
-    // Determine which function to call based on the user's selection
-    if (select.value === "location") {
-      getLocation(inputId);
-    } else if (select.value === "character") {
-      getCharacter(inputId);
-    } else if (select.value === "episode") {
-      getEpisode(inputId);
-    }
-  } else {
-    alert("Please enter an ID before clicking 'Show'.");
-  }
-});
-
-submitAllBtn.addEventListener("click", function (event) {
-  event.preventDefault();
-
-  // Call the fetchData function without specifying an ID for all items
-  if (select.value === "location") {
-    fetchData("location").then((jsonResponse) => {
-      updateDOM(jsonResponse);
-    });
-  } else if (select.value === "character") {
-    fetchData("character").then((jsonResponse) => {
-      updateDOM(jsonResponse);
-    });
-  } else if (select.value === "episode") {
-    fetchData("episode").then((jsonResponse) => {
-      updateDOM(jsonResponse);
-    });
-  }
-});
