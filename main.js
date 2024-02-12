@@ -1,55 +1,70 @@
-//Write a function that can take in any number of arguments, and returns the sum of all of the arguments.
-function sum(...numbers) {
-  return numbers.reduce((acc, num) => acc + num, 0);
-}
+import Guest from "./Guest.js";
+import Restaurant from "./Restaurant.js";
+import Reservation from "./Reservation.js";
+import Order from "./Order.js";
+import { OnlineOrder } from "./OnlineOrder.js";
+import { MenuItem } from "./MenuItem.js";
 
-console.log(sum(5, 10, 15));
+const firstRestaurant = new Restaurant("Cornul Vanatorului", 300);
+const firstReservation = new Reservation("Andrei", "08/02/2024", "15:30", 40);
+const secondReservation = new Reservation("Mihai", "12/02/2024", "13:00", 30);
+const thirdReservation = new Reservation("Radu", "12/02/2024", "15:00", 20);
+const forthReservation = new Reservation("Alex", "12/02/2024", "14:00", 14);
 
-//Write a function that can take in any number of arguments (including numbers or strings), and returns the sum of only the numbers.
-function sumNumbers(...arguments) {
-  return arguments
-    .filter((arguments) => typeof arguments === "number" && !isNaN(arguments))
-    .reduce((acc, num) => acc + num, 0);
-}
+console.log(firstReservation);
 
-console.log(sumNumbers(2, "4", 6, 8, "10"));
+//tests for the methods defined in the Reservation class
+firstRestaurant.addReservation(firstReservation);
+firstRestaurant.addReservation(secondReservation);
+firstRestaurant.addReservation(thirdReservation);
+firstRestaurant.addReservation(forthReservation);
+console.log(firstRestaurant);
 
-//Write a function that takes in two arrays as arguments, and returns a single array that combines both (using the spread operator).
-function concatArrays(array1, array2) {
-  return [...array1, ...array2];
-}
-const array1 = [1, 3, 7];
-const array2 = [2, 4, 10];
+firstRestaurant.removeReservation("Radu");
 
-const concatArray = concatArrays(array1, array2);
-console.log(concatArray);
+firstRestaurant.checkAvailability();
+console.log(
+  "The number of available seats is: " + firstRestaurant.checkAvailability()
+);
 
-//Write a function that takes in any amount of arguments, and returns the sum of every other argument
-function sumEveryOther(...args) {
-  return args
-    .filter((_, index) => index % 2 === 0)
-    .reduce((sum, num) => sum + num, 0);
-}
+firstRestaurant.listReservations();
 
-const result = sumEveryOther(1, 2, 3, 4, 5, 6);
-console.log(result); // Output: 1 + 3 + 5 = 9
+console.log(
+  "Is the reservation available? The answer is: " +
+    firstRestaurant.isReservationAvailable("Radu")
+);
 
-//Write a function that can take in any number of arguments, and returns an array of only the unique arguments.
-function uniqueArguments(...args) {
-  return [...new Set(args)];
-}
+console.log(
+  "Is the restaurant fully booked? The answer is: " +
+    firstRestaurant.isFullyBooked()
+);
 
-const uniqueArray = uniqueArguments(1, 2, 3, 2, 4, 5, 1, 6);
-console.log(uniqueArray); // Output: [1, 2, 3, 4, 5, 6]
+console.log("The number of guests is: " + firstRestaurant.getGuestCount());
 
-//Write a function that takes in any number of arrays as arguments and combines all of them into one array.
-function combineArrays(...arrays) {
-  return [].concat(...arrays);
-}
+console.log(firstRestaurant.sortReservationsAlphabetically());
 
-const arrayNum = [1, 2, 3];
-const arrayStr = ["a", "b", "c"];
-const arrayBool = [true, false];
+//Creating order objects
+const item1 = new MenuItem("Sarmale cu mamaliguta", 25);
+const item2 = new MenuItem("Ciorba de burta", 13);
+const item3 = new MenuItem("Chiftelute de peste cu piure de cartofi", 25);
 
-const combinedArray = combineArrays(arrayNum, arrayStr, arrayBool);
-console.log(combinedArray);
+const order1 = new Order(1, [item1, item2]);
+const order2 = new Order(4, [item1, item2, item3]);
+const order3 = new Order(5, [item2, item3]);
+
+firstRestaurant.addOrder(order1);
+firstRestaurant.addOrder(order2);
+firstRestaurant.addOrder(order3);
+
+firstRestaurant.removeOrder(5);
+
+console.log(firstRestaurant.listOrders());
+
+firstRestaurant.getTotalRevenue();
+
+firstRestaurant.addMenuItem(item1);
+firstRestaurant.addMenuItem(item2);
+firstRestaurant.addMenuItem(item3);
+
+firstRestaurant.removeMenuItem("Sarmale cu mamaliguta");
+console.log(firstRestaurant.listMenuItems());
