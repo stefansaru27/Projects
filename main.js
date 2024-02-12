@@ -1,59 +1,106 @@
-// Create a Highway with different types of vehicles (bus, car, motorcycle, etc..). Bus, Car Motorcycle instances inherit from Vehicle.
-function Vehicle(make, model) {
-  this.make = make;
-  this.model = model;
+function Book(title, author, isbn) {
+  this.title = title;
+  this.author = author;
+  this.isbn = isbn;
 }
+//display function Book
+Book.prototype.displayInfo = function () {
+  console.log(
+    `Book title: ${this.title} -- Author: ${this.author}  -- ISBN: ${this.isbn}`
+  );
+};
 
-function Bus(make, model, capacity) {
-  Vehicle.call(this, make, model);
-  this.capacity = capacity;
+function FictionBook(title, author, isbn, additionalGenre) {
+  Book.call(this, title, author, isbn);
+  this.additionalGenre = additionalGenre;
 }
-Bus.prototype = Object.create(Vehicle.prototype);
-Bus.prototype.constructor = Bus;
+FictionBook.prototype = Object.create(Book.prototype);
+FictionBook.prototype.constructor = FictionBook;
+//display function FictionBook overwrites the display function from Book class
+FictionBook.prototype.displayInfo = function () {
+  console.log(
+    `Fiction Book title: ${this.title} -- Author: ${this.author} -- Additional Genre: ${this.additionalGenre} -- ISBN: ${this.isbn}`
+  );
+};
 
-function Car(make, model, doorsNumber) {
-  Vehicle.call(this, make, model);
-  this.doorsNumber = doorsNumber;
+function Library(books) {
+  this.books = books;
 }
-Car.prototype = Object.create(Vehicle.prototype);
-Car.prototype.constructor = Car;
+//Function for adding books in the library
+Library.prototype.addBook = function (newBook) {
+  this.books.push(newBook);
+  console.log(
+    `In this library you have added the following books: ${newBook.title}`
+  );
+};
+Library.prototype.displayLibrary = function () {
+  console.log("Your library has the following books: ");
+  this.books.forEach(function (book) {
+    console.log(book.title);
+  });
+};
 
-function Motorcycle(make, model, hasSidecar) {
-  Vehicle.call(this, make, model);
-  this.hasSidecar = hasSidecar;
-}
-Motorcycle.prototype = Object.create(Vehicle.prototype);
-Motorcycle.prototype.constructor = Motorcycle;
-
-var bus1 = new Bus("Mercedes", "Citaro", 50);
-var car1 = new Car("Dacia", "Sandero", 5);
-var motorcycle1 = new Motorcycle("Harley-Davidson", "Sportster", true);
-
-console.log(bus1);
-console.log(car1);
-console.log(motorcycle1);
-
-// Create 2 Highways and allow a list of unique/different vehicles to run on it.
-function Highway(name) {
+function LibraryMember(name, library) {
   this.name = name;
-  this.vehicles = [];
+  this.library = library;
+  this.booksBorrowed = [];
 }
 
-Highway.prototype.addVehicle = function (vehicle) {
-  // Check if the vehicle is not already on the highway
-  if (!this.vehicles.includes(vehicle)) {
-    this.vehicles.push(vehicle);
-    console.log(`${vehicle.make} ${vehicle.model} is now on ${this.name}.`);
+LibraryMember.prototype.borrowBook = function (book) {
+  // Check if the book is available in the library
+  if (this.library.books.includes(book)) {
+    // Add the book to the member's borrowed books
+    this.booksBorrowed.push(book);
+    console.log(`${this.name} has borrowed the book: ${book.title}`);
   } else {
-    console.log(`${vehicle.make} ${vehicle.model} is already on ${this.name}`);
+    console.log(
+      `${this.name}, the book ${book.title} is not available in the library.`
+    );
   }
 };
 
-var highway1 = new Highway("Highway 1");
-var highway2 = new Highway("Highway 2");
+LibraryMember.prototype.displayBorrowedBooks = function () {
+  console.log(`${this.name}'s borrowed books:`);
+  this.booksBorrowed.forEach(function (book) {
+    console.log(book.title);
+  });
+};
 
-// Add vehicle on the highway
-highway1.addVehicle(bus1);
-highway1.addVehicle(car1);
+//tests
+var book1 = new Book("Rich dad, poor dad", "Robert Kiosaki", 12345);
+var book2 = new Book("Emotional Inteligence", "Daniel Goleman", 12346);
 
-highway2.addVehicle(motorcycle1);
+var fictionBook1 = new FictionBook(
+  "Angels and Demons",
+  "Dan Brown",
+  12121,
+  "Drama"
+);
+var fictionBook2 = new FictionBook(
+  "The Da Vinci Code",
+  "Dan Brown",
+  12134,
+  "Thriller"
+);
+
+var myBooksArray = [book1, fictionBook1];
+
+var library1 = new Library(myBooksArray);
+library1.addBook(book2);
+library1.addBook(fictionBook2);
+
+var radu = new LibraryMember("Radu", library1);
+
+console.log(book1);
+console.log(fictionBook1);
+console.log(library1);
+
+book1.displayInfo();
+fictionBook1.displayInfo();
+library1.displayLibrary();
+
+console.log(radu);
+
+radu.borrowBook(book1);
+radu.borrowBook(fictionBook1);
+radu.displayBorrowedBooks();
